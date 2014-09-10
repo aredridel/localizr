@@ -85,9 +85,11 @@ test('bundle', function (t) {
 
             t.error(err);
 
-            value = bun.get('foo');
-            t.equal(value, 'Hello, {name}!');
-            t.end();
+            bun.get('foo', {}, function (err, value) {
+                t.error(err);
+                t.equal(value, 'Hello, {name}!');
+                t.end();
+            });
         });
     });
 
@@ -99,9 +101,11 @@ test('bundle', function (t) {
 
             t.error(err);
 
-            value = bun.get('bar.baz');
-            t.equal(value, 'Goodnight, {name}!');
-            t.end();
+            bun.get('bar.baz', {}, function (err, value) {
+                t.error(err);
+                t.equal(value, 'Goodnight, {name}!');
+                t.end();
+            });
         });
     });
 
@@ -122,9 +126,11 @@ test('bundle', function (t) {
 
             t.error(err);
 
-            value = bun.get('bam');
-            t.equal(value, '☃bam☃');
-            t.end();
+            bun.get('bam', {}, function (err, value) {
+                t.error(err);
+                t.equal(value, '☃bam☃');
+                t.end();
+            });
         });
     });
 
@@ -136,9 +142,11 @@ test('bundle', function (t) {
 
             t.error(err);
 
-            value = bun.get(undefined);
-            t.equal(value, '☃undefined☃');
-            t.end();
+            bun.get(undefined, {}, function (err, value) {
+                t.error(err);
+                t.equal(value, '☃undefined☃');
+                t.end();
+            });
         });
     });
 
