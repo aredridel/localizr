@@ -3,7 +3,7 @@
 var test = require('tape'),
     path = require('path'),
     localizr = require('../'),
-    concat = require('concat-stream');
+    bl = require('bl');
 
 
 test('localizr', function (t) {
@@ -16,8 +16,9 @@ test('localizr', function (t) {
             props: path.join(__dirname, 'fixtures', 'content', 'index.properties')
         };
 
-        dest = concat({ encoding: 'string' }, function(data) {
-            t.equal(data, '<h1>Hello, {name}!</h1>');
+        dest = bl(function(err, data) {
+            t.error(err);
+            t.equal(data.toString(), '<h1>Hello, {name}!</h1>');
             t.end();
         });
 

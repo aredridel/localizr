@@ -4,7 +4,7 @@ var fs = require('fs'),
     test = require('tape'),
     path = require('path'),
     tagfinder = require('findatag'),
-    concat = require('concat-stream'),
+    bl = require('bl'),
     bundle = require('../lib/bundle'),
     handler = require('../lib/handler');
 
@@ -297,11 +297,8 @@ test('handler', function (t) {
         testcases.forEach(function (testcase) {
             var src, dest;
 
-            dest = concat({ encoding: 'string' }, function (data) {
-                t.equal(data, testcase.expected, testcase.it);
-            });
-
-            dest.on('finish', function () {
+            dest = bl(function (err, data) {
+                t.equal(data.toString(), testcase.expected, testcase.it);
                 count += 1;
                 if (count === total) {
                     t.end();
