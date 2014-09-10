@@ -8,47 +8,43 @@ var test = require('tape'),
 test('bundle', function (t) {
 
     t.test('create', function (t) {
-        var file, bun;
+        var root, bun;
 
-        file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
-        bun = bundle.create(file);
+        root = path.resolve(__dirname, 'fixtures/content');
+        bun = bundle.create(root);
 
         t.equal(typeof bun, 'object');
         t.equal(typeof bun.get, 'function');
         t.equal(typeof bun.load, 'function');
-        t.equal(bun.file, file);
-        t.equal(bun.type, 'properties');
-        t.equal(bun.name, 'index');
+        t.equal(bun.root, root);
         t.end();
     });
 
 
     t.test('load', function (t) {
-        var file, orig;
+        var root, orig;
 
-        file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
+        root = path.resolve(__dirname, 'fixtures/content');
 
-        orig = bundle.create(file);
+        orig = bundle.create(root);
         orig.load(function (err, bun) {
             t.error(err);
             t.strictEqual(bun, orig);
             t.equal(typeof bun, 'object');
             t.equal(typeof bun.get, 'function');
             t.equal(typeof bun.load, 'function');
-            t.equal(bun.file, file);
-            t.equal(bun.type, 'properties');
-            t.equal(bun.name, 'index');
+            t.equal(bun.root, root);
             t.end();
         });
     });
 
 
     t.test('load noop', function (t) {
-        var file, orig;
+        var root, orig;
 
-        file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
+        root = path.resolve(__dirname, 'fixtures/content');
 
-        orig = bundle.create(file);
+        orig = bundle.create(root);
         orig.load(function (err, bun) {
 
             t.error(err);
@@ -60,7 +56,6 @@ test('bundle', function (t) {
                 t.equal(typeof bun2, 'object');
                 t.equal(typeof bun2.get, 'function');
                 t.equal(typeof bun2.load, 'function');
-                t.equal(bun2.file, file);
                 t.equal(bun2.type, 'properties');
                 t.equal(bun2.name, 'index');
                 t.end();
@@ -79,13 +74,13 @@ test('bundle', function (t) {
 
 
     t.test('get', function (t) {
-        var file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
-        bundle.create(file).load(function (err, bun) {
+        var root = path.resolve(__dirname, 'fixtures/content');
+        bundle.create(root).load(function (err, bun) {
             var value;
 
             t.error(err);
 
-            bun.get('foo', {}, function (err, value) {
+            bun.get('index.foo', {}, function (err, value) {
                 t.error(err);
                 t.equal(value, 'Hello, {name}!');
                 t.end();
@@ -95,13 +90,13 @@ test('bundle', function (t) {
 
 
     t.test('get namespaced', function (t) {
-        var file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
-        bundle.create(file).load(function (err, bun) {
+        var root = path.resolve(__dirname, 'fixtures/content');
+        bundle.create(root).load(function (err, bun) {
             var value;
 
             t.error(err);
 
-            bun.get('bar.baz', {}, function (err, value) {
+            bun.get('index.bar.baz', {}, function (err, value) {
                 t.error(err);
                 t.equal(value, 'Goodnight, {name}!');
                 t.end();
@@ -111,17 +106,17 @@ test('bundle', function (t) {
 
 
     t.test('get err - no load', function (t) {
-        var file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
+        var root = path.resolve(__dirname, 'fixtures/content');
         t.throws(function () {
-            bundle.create(file).get('foo');
+            bundle.create(root).get('foo');
         });
         t.end();
     });
 
 
     t.test('get missing', function (t) {
-        var file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
-        bundle.create(file).load(function (err, bun) {
+        var root = path.resolve(__dirname, 'fixtures/content');
+        bundle.create(root).load(function (err, bun) {
             var value;
 
             t.error(err);
@@ -136,8 +131,8 @@ test('bundle', function (t) {
 
 
     t.test('get nothing', function (t) {
-        var file = path.join(__dirname, 'fixtures', 'content', 'index.properties');
-        bundle.create(file).load(function (err, bun) {
+        var root = path.resolve(__dirname, 'fixtures/content');
+        bundle.create(root).load(function (err, bun) {
             var value;
 
             t.error(err);

@@ -27,9 +27,11 @@
   "dependencies": {
     "ent": "^2.0.0",
     "findatag": "0.0.9",
+    "localebundle": "^1.1.1",
+    "metabundle": "^2.0.1",
     "minimist": "0.0.7",
     "mkdirp": "~0.3.5",
-    "spud": "0.0.3"
+    "spud": "2.0.0-hypothetical"
   },
   "devDependencies": {
     "bl": "^0.9.3",

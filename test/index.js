@@ -12,13 +12,13 @@ test('localizr', function (t) {
         var options, dest;
 
         options = {
-            src: path.join(__dirname, 'fixtures', 'templates', 'index.dust'),
-            props: path.join(__dirname, 'fixtures', 'content', 'index.properties')
+            src: path.resolve(__dirname, 'fixtures/templates/index.dust'),
+            props: path.resolve(__dirname, 'fixtures/content')
         };
 
         dest = bl(function(err, data) {
             t.error(err);
-            t.equal(data.toString(), '<h1>Hello, {name}!</h1>');
+            t.equal(data.toString().trim(), '<h1>Hello, {name}!</h1>');
             t.end();
         });
 
@@ -31,7 +31,7 @@ test('localizr', function (t) {
 
         options = {
             src: undefined,
-            props: path.join(__dirname, 'fixtures', 'content', 'index.properties')
+            props: path.resolve(__dirname, 'fixtures/content')
         };
 
         t.throws(function () {
@@ -71,8 +71,8 @@ test('localizr', function (t) {
         var options;
 
         options = {
-            src: path.join(__dirname, 'fixtures', 'templates', 'nofile.dust'),
-            props: path.join(__dirname, 'fixtures', 'content', 'index.properties')
+            src: path.resolve(__dirname, 'fixtures/templates/nofile.dust'),
+            props: path.resolve(__dirname, 'fixtures/content')
         };
 
         function onerror(err) {
@@ -88,8 +88,8 @@ test('localizr', function (t) {
         var options;
 
         options = {
-            src: path.join(__dirname, 'fixtures', 'templates', 'index.dust'),
-            props: path.join(__dirname, 'fixtures', 'content', 'nofile.properties')
+            src: path.resolve(__dirname, 'fixtures/templates/index.dust'),
+            props: path.resolve(__dirname, 'fixtures/content')
         };
 
         function onerror(err) {
