@@ -39,40 +39,6 @@ test('bundle', function (t) {
     });
 
 
-    t.test('load noop', function (t) {
-        var root, orig;
-
-        root = path.resolve(__dirname, 'fixtures/content');
-
-        orig = bundle.create(root);
-        orig.load(function (err, bun) {
-
-            t.error(err);
-            t.strictEqual(bun, orig);
-
-            bun.load(function (err, bun2) {
-                t.error(err);
-                t.strictEqual(bun2, bun);
-                t.equal(typeof bun2, 'object');
-                t.equal(typeof bun2.get, 'function');
-                t.equal(typeof bun2.load, 'function');
-                t.equal(bun2.type, 'properties');
-                t.equal(bun2.name, 'index');
-                t.end();
-            });
-        });
-    });
-
-
-    t.test('load err - no file', function (t) {
-        bundle.create('').load(function (err, bun) {
-            t.ok(err);
-            t.notOk(bun);
-            t.end();
-        });
-    });
-
-
     t.test('get', function (t) {
         var root = path.resolve(__dirname, 'fixtures/content');
         bundle.create(root).load(function (err, bun) {
