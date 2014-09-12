@@ -84,21 +84,5 @@ test('localizr', function (t) {
     });
 
 
-    t.test('props ENOENT', function (t) {
-        var options;
-
-        options = {
-            src: path.resolve(__dirname, 'fixtures/templates/index.dust'),
-            props: path.resolve(__dirname, 'fixtures/content')
-        };
-
-        function onerror(err) {
-            t.ok(err);
-            t.end();
-        }
-
-        localizr.createReadStream(options).on('error', onerror);
-    });
-
 });
 
